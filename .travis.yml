@@ -9,5 +9,6 @@ before_install:
   - node --version
   - yarn install
   - yarn silent
+  - ls
 script:
-  - 'yarn test'
+  - 'node index'
