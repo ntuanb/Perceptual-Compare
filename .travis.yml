@@ -1,14 +1,14 @@
 language: node_js
 node_js:
-  - '10.7'
+- '10.7'
+before_install:
+- node --version
+- yarn install
+- yarn silent
+- ls
+script:
+- node index
 notifications:
   slack:
-    secure: BbZ2ovseodzmI7NYGlaI5IG1E7xrKnqeBX1xTPb6tfEu4N3JBQ9ZqEEv/UK1gx4FWpMLjDpWIGERHpXAQQcM9erM7K+WZL2eCZ88gJXrgAbfrLw7+/S9LAP4szAmnCt+YLfqBWnxt2DBm1JtOet4EYOWTXU4WwR3iouhnsT2vBCqx/qxxotE0H5y5vsx3Ljb8h4qszF5PipL1LzNhuKaxmefVf0UDCvDOSnKdKnMQVbttqHcyF+pWhcZ+vmYwH8+CvDo/gmXpKEsAYCHm4m2WxQlXqJSk9WuarLYAUN21DcPm0H/rjNN6xlXnXqULl7my2aoF0NSYuA4c1qg3DI1RojZo5mt3QPSfnGfawgK5UzFM00PiLrfaj2OUotwsvhV5gYUxO7xxpdNGNb/r5qi8nu2mibUcExQaQ8IYIRJqD41f2YWCxifLZHslKPAweHuabazDqsNI1uevE6TizH+R2YG5I0GgeWu4Fx0JwlV4moXksewxwPijXvjNKHhjr/C1emh/BMLzjduX55ZJ7WWqft+PfxVrKTdtN8ecsmIRi61VfOIM9s6WrgnuhzA2ldEnrJBBwXV5ELPeovAtJkYY/6IeyP7AL0Jdq8vP06GMdA7x2fb91sdlW9bb/tVM7DC1lwmSIxmkPDk5+5sBYv0TFt/+5b7w7IwntYp+ljVsUw=
-  on_success: always
-before_install:
-  - node --version
-  - yarn install
-  - yarn silent
-  - ls
-script:
-  - 'node index'
+    rooms:
+      secure: HI+7EgpAM5Nkhv6YiW2LmkuZegsCzNm5/iF9kYxRUmgB44S/cuGg4HHL7/9YMFJVU+bo0Tx/4wv3RZWn/zGKC3Bj+vXPUZR+xYDXidAA8810r0EG6ODVBtQDvDBTvSbW9oL3v5RhM3bUbqRHCujw4WNIvVw8Hjahj2uffL99Sb9XpTvDNNm3m1QSUB4pmYgG+LqCHALGAWdo5a8nXhCCzz5HnodbYMtLPpeiYl7lPtp42eCum1SmnK+5o7NhGg0b9oI50xew/7rhiRUu+HvO+U96S8Or4ETZqbZmnk43KpTIQKWZpodNhnlSE0qvlIWepiVtMZFK1d1gcEs0rdabpdEFoH8vDJv/lAAsSV6SY5VV2YzsCN/4M45akWPm6yWxLe5JpNwIPnyivGxcR/9SHs9OGmnSy7eqc6VHXaJaSXNWEO+1uetBSMCd2+R7cWRVX5Fh/q6695FQgT8imIkDvsyDoCpxOOiT6z4oQSEIL8hqpqfXAAVhfBvogIrv1tmdaOeDlOWzhNs0F+YPAH7bijq8VUK5zKSuN9v5zo6/+i7UkNM7z7jMM+WA5ZQUzD/+Bxm72j9JdDWXyc6tonRp+wFou0F4fCkz06vFVYCy9fzixRSTLtI+FYzoHwuJzSroVI2CdmNSTKwYDJCj6na1P8vT6URmderC9BGInP1H93k=
