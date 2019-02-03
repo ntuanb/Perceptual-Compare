@@ -1,9 +1,11 @@
 // Libs
-const Nightmare = require('nightmare')
-const fs = require('fs')
-const Niffy = require('niffy')
-const PNG = require('pngjs').PNG
-const pixelmatch = require('pixelmatch')
+const Nightmare         = require('nightmare')
+const fs                = require('fs')
+const Niffy             = require('niffy')
+const PNG               = require('pngjs').PNG
+const pixelmatch        = require('pixelmatch')
+const { expect }        = require('chai');
+const { send }          = require('./email.js');
 
 // Constants
 const URL = 'http://localhost:8081';
@@ -33,6 +35,11 @@ let getCurrScreenshot = () => {
 let getPrevScreenshot = () => {
   let files = fs.readdirSync(SCREENSHOT_DIR);
   return files.length > 0 ? './' + SCREENSHOT_DIR + '/' + files.reverse()[0] : '';
+}
+
+let getLastDifference = () => {
+  let files = fs.readdirSync(DIFFERENCE_DIR);
+  return files.length > 0 ? './' + DIFFERENCE_DIR + '/' + files.reverse()[0] : '';
 }
 
 let getNumberOfDiffPixels = (file1, file2) => {
@@ -73,11 +80,27 @@ nightmare
     return getNumberOfDiffPixels(getPrevScreenshot(), getCurrScreenshot());
   })
   .then(numDiffPixels => {
-    console.log(numDiffPixels);
 
     // Do some diffing compare to error if pixels is greater than 0
+    expect(numDiffPixels).to.equal(0);
+
     // Pack the image and send
-    // Error out
+    let imagePath = getLastDifference();
+    let filename = imagePath.split('/').reverse()[0];
+    let subject = 'Test Failed - ' + filename;
+    let path = imagePath;
+    send({
+      from: 'ntuanb@gmail.com',
+      to: 'ntuanb@gmail.com',
+      subject: subject,
+      text: '',
+      html: '<img src="cid:image" />',
+      attachments: [{
+        filename: filename,
+        path: path,
+        cid: 'image'
+      }]
+    });
 
   })
   .catch(error => {

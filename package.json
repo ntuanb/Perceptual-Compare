@@ -4,14 +4,17 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
+    "chai": "^4.2.0",
     "http-server": "^0.11.1",
     "milligram": "^1.3.0",
     "niffy": "^0.2.0",
     "nightmare": "^3.0.1",
+    "nodemailer": "^5.1.1",
     "pixelmatch": "^4.0.2"
   },
   "scripts": {
     "serve": "./node_modules/http-server/bin/http-server -o",
-    "screenshot": "node index"
+    "silent": "./node_modules/http-server/bin/http-server -o -s",
+    "test": "node index"
   }
 }
