@@ -84,7 +84,7 @@ nightmare
     // Do some diffing compare to error if pixels is greater than 0
     expect(numDiffPixels).to.equal(0);
 
-    // Pack the image and send
+    // Pack the image and send OR upload to amazon S3
     let imagePath = getLastDifference();
     let filename = imagePath.split('/').reverse()[0];
     let subject = 'Test Failed - ' + filename;
