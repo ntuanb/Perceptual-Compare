@@ -6,8 +6,11 @@ before_install:
 - yarn install
 - yarn silent
 - ls
+cache:
+  directories:
+    - node_modules
 script:
-- node index
+- node index.js
 - ls screenshots
 - ls difference
 notifications:

@@ -28,16 +28,19 @@ let getCurrentTimestamp = () => {
 }
 
 let getCurrScreenshot = () => {
+  console.log('Getting current screenshot');
   let files = fs.readdirSync(SCREENSHOT_DIR);
   return files.length > 0 ? './' + SCREENSHOT_DIR + '/' + files.reverse()[1] : '';
 }
 
 let getPrevScreenshot = () => {
+  console.log('Getting previous screenshot');
   let files = fs.readdirSync(SCREENSHOT_DIR);
   return files.length > 0 ? './' + SCREENSHOT_DIR + '/' + files.reverse()[0] : '';
 }
 
 let getLastDifference = () => {
+  console.log('Getting last difference screenshot');
   let files = fs.readdirSync(DIFFERENCE_DIR);
   return files.length > 0 ? './' + DIFFERENCE_DIR + '/' + files.reverse()[0] : '';
 }
@@ -80,6 +83,7 @@ nightmare
     return getNumberOfDiffPixels(getPrevScreenshot(), getCurrScreenshot());
   })
   .then(numDiffPixels => {
+    console.log('Difference in pixels ', numDiffPixels);
 
     // Do some diffing compare to error if pixels is greater than 0
     expect(numDiffPixels).to.equal(0);
