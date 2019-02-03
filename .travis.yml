@@ -9,4 +9,4 @@ before_install:
   - node --version
   - yarn silent
 script:
-  - 'yarn test',
+  - 'yarn test'
