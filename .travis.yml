@@ -1,6 +1,10 @@
 language: node_js
 node_js:
 - '10.7'
+addons:
+  artifacts:
+    debug: true
+    working_dir: out
 before_install:
 - node --version
 - yarn install
@@ -8,6 +12,8 @@ before_install:
 - ls
 script:
 - node index
+- ls screenshots
+- ls difference
 notifications:
   slack:
     rooms:
