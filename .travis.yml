@@ -11,8 +11,7 @@ cache:
     - node_modules
 script:
 - node index.js
-- ls screenshots
-- ls difference
+- ls artifacts/$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER/$TRAVIS_JOB_NUMBER
 notifications:
   slack:
     rooms:
