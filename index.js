@@ -7,7 +7,7 @@ const { expect }        = require('chai');
 const { send }          = require('./email.js');
 
 // Constants
-const URL = 'http://localhost:8081';
+const URL = 'http://localhost:8080';
 const SCREENSHOT_DIR = './screenshots';
 const DIFFERENCE_DIR = './difference';
 

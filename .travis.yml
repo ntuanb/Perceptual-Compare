@@ -17,7 +17,7 @@ before_install:
 - yarn install
 - chmod +x http-server.sh
 - ./http-server.sh
-- curl http://localhost:8081
+- curl http://localhost:8080
 - ls
 - node index.js
 cache:
