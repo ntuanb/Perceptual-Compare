@@ -16,6 +16,7 @@ before_install:
 - node --version
 - yarn install
 - ./node_modules/http-server/bin/http-server &
+- curl http://localhost:8081
 - ls
 - node index.js
 cache:
