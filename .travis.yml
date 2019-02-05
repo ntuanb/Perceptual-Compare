@@ -15,7 +15,7 @@ before_install:
 - node test.js
 - node --version
 - yarn install
-- yarn silent
+- ./node_modules/http-server/bin/http-server &
 - ls
 - node index.js
 cache:
