@@ -17,7 +17,6 @@ before_install:
 - chmod +x http-server.sh
 - ./http-server.sh
 - curl http://localhost:8090
-- node index.js
 cache:
   directories:
     - node_modules
