@@ -7,6 +7,7 @@ addons:
     paths:
       - ./tests/_output
 before_install:
+- node test.js
 - node --version
 - yarn install
 - yarn silent
