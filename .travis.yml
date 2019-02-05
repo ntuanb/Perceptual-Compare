@@ -12,11 +12,10 @@ before_install:
 - yarn install
 - yarn silent
 - ls
+- node index.js
 cache:
   directories:
     - node_modules
-script:
-- node index.js
 after_script:
 - ls difference
 - ls screenshots
