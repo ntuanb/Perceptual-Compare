@@ -14,7 +14,7 @@
   },
   "scripts": {
     "serve": "./node_modules/http-server/bin/http-server -o",
-    "silent": "./node_modules/http-server/bin/http-server -o -s &",
+    "silent": "./node_modules/http-server/bin/http-server -o -s",
     "test": "node index"
   }
 }
