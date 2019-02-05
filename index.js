@@ -6,14 +6,30 @@ const pixelmatch        = require('pixelmatch')
 const { expect }        = require('chai');
 const { send }          = require('./email.js');
 
+let getCurrentTimestamp = () => {
+  let date = new Date();
+  return date.getTime();
+}
+
+let createDirectory = (name) => {
+  if (!fs.existsSync('./' + name)){
+    fs.mkdirSync('./' + name);
+  }
+}
+
 // Constants
-const URL = 'http://localhost:8080';
+const URL = 'http://localhost:8090';
 const SCREENSHOT_DIR = './screenshots';
 const DIFFERENCE_DIR = './difference';
+const BUILD_DIRECTORY = './builds';
+const TEST_NAME = 'homepage';
 
-console.log(URL);
-console.log(SCREENSHOT_DIR);
-console.log(DIFFERENCE_DIR);
+let timestamp = getCurrentTimestamp();
+let directory = BUILD_DIRECTORY + '/' + timestamp;
+createDirectory(directory);
+
+let filename = TEST_NAME;
+let fullpath = directory + '/' + filename + '.png';
 
 // Inits
 const nightmare = Nightmare({
@@ -21,29 +37,6 @@ const nightmare = Nightmare({
 });
 
 // Helpers
-let getCurrentTimestamp = () => {
-  let date = new Date();
-  return date.getTime();
-}
-
-let getCurrScreenshot = () => {
-  console.log('Getting current screenshot');
-  let files = fs.readdirSync(SCREENSHOT_DIR);
-  return files.length > 0 ? './' + SCREENSHOT_DIR + '/' + files.reverse()[1] : '';
-}
-
-let getPrevScreenshot = () => {
-  console.log('Getting previous screenshot');
-  let files = fs.readdirSync(SCREENSHOT_DIR);
-  return files.length > 0 ? './' + SCREENSHOT_DIR + '/' + files.reverse()[0] : '';
-}
-
-let getLastDifference = () => {
-  console.log('Getting last difference screenshot');
-  let files = fs.readdirSync(DIFFERENCE_DIR);
-  return files.length > 0 ? './' + DIFFERENCE_DIR + '/' + files.reverse()[0] : '';
-}
-
 let getNumberOfDiffPixels = (file1, file2) => {
   return new Promise((resolve, reject) => {
     let img1 = fs.createReadStream(file1).pipe(new PNG()).on('parsed', doneReading);
@@ -55,7 +48,7 @@ let getNumberOfDiffPixels = (file1, file2) => {
       if (++filesRead < 2) return;
 
       const diff = new PNG({width: img1.width, height: img2.height});
-      diff.pack().pipe(fs.createWriteStream(DIFFERENCE_DIR + '/' + getCurrentTimestamp() + '.png'));
+      diff.pack().pipe(fs.createWriteStream(directory + '/' + filename + '-diff.png'));
 
       const numDiffPixels = pixelmatch(
         img1.data,
@@ -73,28 +66,32 @@ let getNumberOfDiffPixels = (file1, file2) => {
   });
 }
 
-console.log('Nightmaring...');
+let getPrevBuildsFolder = () => {
+  let files = fs.readdirSync(BUILD_DIRECTORY);
+  return files.reverse()[1];
+}
+
+let getPrevBuildsFile = (filename) => {
+  return BUILD_DIRECTORY + '/' + getPrevBuildsFolder() + '/' + filename + '.png';
+}
 
 // Go
+console.log('Nightmaring...');
 nightmare
   .goto(URL)
-  .screenshot(SCREENSHOT_DIR + '/' + getCurrentTimestamp() + '.png')
+  .screenshot(fullpath)
   .end()
   .then(_ => {
     console.log('Screenshot done...')
-    return getNumberOfDiffPixels(getPrevScreenshot(), getCurrScreenshot());
+    return getNumberOfDiffPixels(getPrevBuildsFile(filename), fullpath);
   })
   .then(numDiffPixels => {
-    console.log('Difference in pixels ', numDiffPixels, '...');
-
-    // Do some diffing compare to error if pixels is greater than 0
-    expect(numDiffPixels).to.equal(0);
+    console.log('Difference in pixels:', numDiffPixels);
 
     // Pack the image and send OR upload to amazon S3
     console.log('Sending email...');
-    let imagePath = getLastDifference();
-    let filename = imagePath.split('/').reverse()[0];
-    let subject = 'Test Failed - ' + filename;
+    let imagePath = directory + '/' + filename + '-diff.png';
+    let subject = 'Test Failed - ' + TEST_NAME;
     let path = imagePath;
     send({
       from: 'ntuanb@gmail.com',
@@ -108,6 +105,9 @@ nightmare
         cid: 'image'
       }]
     });
+
+    // Do some diffing compare to error if pixels is greater than 0
+    expect(numDiffPixels).to.equal(0);
 
   })
   .catch(error => {

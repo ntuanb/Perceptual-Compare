@@ -13,8 +13,7 @@
     "pixelmatch": "^4.0.2"
   },
   "scripts": {
-    "serve": "./node_modules/http-server/bin/http-server -o",
-    "silent": "./node_modules/http-server/bin/http-server -o &",
+    "serve": "./node_modules/http-server/bin/http-server -o -p 8090",
     "test": "node index"
   }
 }
