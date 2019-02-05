@@ -17,9 +17,6 @@ async function send(mailOptions) {
     }
   });
 
-  // setup email data with unicode symbols
-  let mailOptions = mailOptions;
-
   // send mail with defined transport object
   let info = await transporter.sendMail(mailOptions)
 
