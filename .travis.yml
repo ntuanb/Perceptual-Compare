@@ -1,6 +1,11 @@
 language: node_js
 node_js:
 - '10.7'
+addons:
+  artifacts:
+    debug: true
+    paths:
+      - ./tests/_output
 before_install:
 - node --version
 - yarn install
@@ -11,7 +16,7 @@ cache:
     - node_modules
 script:
 - node index.js
-- ls artifacts/${TRAVIS_REPO_SLUG}/${TRAVIS_BUILD_NUMBER}/${TRAVIS_JOB_NUMBER}
+- ls ./tests/_output
 notifications:
   slack:
     rooms:
