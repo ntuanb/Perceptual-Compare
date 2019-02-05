@@ -16,6 +16,7 @@ cache:
     - node_modules
 script:
 - node index.js
+after_success:
 - ls ./tests/_output
 notifications:
   slack:
