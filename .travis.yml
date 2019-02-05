@@ -15,7 +15,8 @@ before_install:
 - node test.js
 - node --version
 - yarn install
-- ./node_modules/http-server/bin/http-server &
+- chmod +x http-server.sh
+- ./http-server.sh
 - curl http://localhost:8081
 - ls
 - node index.js
