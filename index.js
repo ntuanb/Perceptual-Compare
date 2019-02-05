@@ -12,6 +12,10 @@ const URL = 'http://localhost:8081';
 const SCREENSHOT_DIR = './screenshots';
 const DIFFERENCE_DIR = './difference';
 
+console.log(URL)
+console.log(SCREENSHOT_DIR)
+console.log(DIFFERENCE_DIR)
+
 // Inits
 const nightmare = Nightmare({
   show: false
