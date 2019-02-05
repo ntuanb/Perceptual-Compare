@@ -1,7 +1,6 @@
 // Libs
 const Nightmare         = require('nightmare')
 const fs                = require('fs')
-const Niffy             = require('niffy')
 const PNG               = require('pngjs').PNG
 const pixelmatch        = require('pixelmatch')
 const { expect }        = require('chai');
@@ -12,17 +11,13 @@ const URL = 'http://localhost:8081';
 const SCREENSHOT_DIR = './screenshots';
 const DIFFERENCE_DIR = './difference';
 
-console.log(URL)
-console.log(SCREENSHOT_DIR)
-console.log(DIFFERENCE_DIR)
+console.log(URL);
+console.log(SCREENSHOT_DIR);
+console.log(DIFFERENCE_DIR);
 
 // Inits
 const nightmare = Nightmare({
   show: false
-});
-
-const niffy = new Niffy(URL, URL, {
-  show: true 
 });
 
 // Helpers
@@ -78,21 +73,25 @@ let getNumberOfDiffPixels = (file1, file2) => {
   });
 }
 
+console.log('Nightmaring...');
+
 // Go
 nightmare
   .goto(URL)
   .screenshot(SCREENSHOT_DIR + '/' + getCurrentTimestamp() + '.png')
   .end()
   .then(_ => {
+    console.log('Screenshot done...')
     return getNumberOfDiffPixels(getPrevScreenshot(), getCurrScreenshot());
   })
   .then(numDiffPixels => {
-    console.log('Difference in pixels ', numDiffPixels);
+    console.log('Difference in pixels ', numDiffPixels, '...');
 
     // Do some diffing compare to error if pixels is greater than 0
     expect(numDiffPixels).to.equal(0);
 
     // Pack the image and send OR upload to amazon S3
+    console.log('Sending email...');
     let imagePath = getLastDifference();
     let filename = imagePath.split('/').reverse()[0];
     let subject = 'Test Failed - ' + filename;
