@@ -2,11 +2,16 @@ language: node_js
 node_js:
 - '10.7'
 addons:
+  apt:
+    packages:
+      - xvfb
   artifacts:
     debug: true
     paths:
       - ./tests/_output
 before_install:
+- export DISPLAY=':99.0'
+- Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
 - node test.js
 - node --version
 - yarn install
