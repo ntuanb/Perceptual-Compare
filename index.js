@@ -19,8 +19,6 @@ let createDirectory = (name) => {
 
 // Constants
 const URL = 'http://localhost:8090';
-const SCREENSHOT_DIR = './screenshots';
-const DIFFERENCE_DIR = './difference';
 const BUILD_DIRECTORY = './builds';
 const TEST_NAME = 'homepage';
 
@@ -87,6 +85,10 @@ nightmare
   })
   .then(numDiffPixels => {
     console.log('Difference in pixels:', numDiffPixels);
+
+    // Download the S3 build previously as a zip
+    // Unpack
+    // Do a compare
 
     // Pack the image and send OR upload to amazon S3
     console.log('Sending email...');
