@@ -13,3 +13,7 @@ build.
 - `node index`
 
 A new build will be created in the builds folder with screenshots and differences created.
+
+### CI
+
+View the following link [https://travis-ci.org/ntuanb/perceptual-compare](https://travis-ci.org/ntuanb/perceptual-compare) to see the build processing.
