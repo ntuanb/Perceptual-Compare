@@ -9,7 +9,7 @@ build.
 
 ### Run
 
-A new build will be created in the builds folder with screenshots and differences created.
-
 - `./node_modules/http-server/bin/http-server -o -p 8090`
 - `node index`
+
+A new build will be created in the builds folder with screenshots and differences created.
